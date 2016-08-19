@@ -1,7 +1,7 @@
 FROM alpine:3.4
 
 # Install packages
-RUN apk update && add --no-cache \
+RUN apk update && apk add --no-cache \
 		ca-certificates \
 		curl \
 		openssl
@@ -29,7 +29,8 @@ RUN curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE
     && wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.23-r3/glibc-2.23-r3.apk \
     && apk add --no-cache glibc-2.23-r3.apk && rm glibc-2.23-r3.apk \
     && ln -s /lib/libz.so.1 /usr/glibc-compat/lib/ \
-    && ln -s /lib/libc.musl-x86_64.so.1 /usr/glibc-compat/lib
+    && ln -s /lib/libc.musl-x86_64.so.1 /usr/glibc-compat/lib \
+	&& docker-compose -v
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
